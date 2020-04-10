@@ -5,8 +5,6 @@ import Header from './components/Header';
 
 import './App.css';
 
-
-
 function App() {
   const [projects, setProjects] = useState([]);
 
@@ -16,9 +14,15 @@ function App() {
     })
   }, []);
 
-  function handleAddProject() {
-    setProjects(currentProjects => 
-      [...currentProjects, `Novo projeto ${Date.now()}`]);
+  async function handleAddProject() {
+    const response = await api.post('projects', {
+      title: `Novo projeto ${Date.now()}`,
+      owner: 'Anderson Santos'
+    })
+
+    const project = response.data;
+
+    setProjects([...projects, project]);
   } 
 
   return (
